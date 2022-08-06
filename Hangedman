@@ -1,0 +1,79 @@
+var words=[ "microsoft", "sony", "nintendo", "atari", "sega",
+"xbox", "playstation", "switch", "lite", "one", "series", "vita",
+"nextgen", "wii", "saturn", "flashback", "scuff", "elite",
+"dualshock", "handheld", "screen", "trigger", "home", "menu", "joystick"];//קביעת מילים
+var word=words[Math.floor(Math.random()*words.length)];//בחירה של מילה רנדומלית על פי קריאה של המערך לפי אורך 
+var answerArray=[];//קביעת משתנה למערך תשובה
+for (var i=0; i<word.length; i++)//לופ על מנת לקחת שוב ושוב מן המערך מילה 
+   answerArray[i] = "_";
+var guessArray=[];//יצירה של משתנה של כמות הניחושים
+var lives=word.length;//קביעת משתנה שיהיה בתנאי לאורך המילה
+lives=lives+2;
+var remainingLetters = word.length;//קביעת משתמש של כמה אותיות נשארו לניחוש כתלות באורך המילה
+   //כותרת למשחק
+console.log("\r\n\uD83C\uDD86\uD83C\uDD74\uD83C\uDD7B\uD83C\uDD72\uD83C\uDD7E\uD83C\uDD7C\uD83C\uDD74 \uD83C\uDD83\uD83C\uDD7E \uD83C\uDD77\uD83C\uDD70\uD83C\uDD7D\uD83C\uDD76\uD83C\uDD7C\uD83C\uDD70\uD83C\uDD7D \uD83C\uDD76\uD83C\uDD70\uD83C\uDD7C\uD83C\uDD74\u2757")
+while (remainingLetters>0)//במידה ולמשתמש כמה אותיות המשך משחק
+{
+   console.log(answerArray.join(" "));
+   console.log('\n');
+   if (lives===1)//תנאי שמודיע למשתמש במידה ויש לו ניסיון אחת
+   {
+       console.log('You have 1 life left.');
+   }
+ 
+   else if(lives>1)//תנאי שמודיע לו שבמידה ויש לו יותר מניסיון אחת כמה יש לו
+   {
+       console.log('You have ' + lives + ' lives left.');
+   }
+ 
+   var guess  = prompt('Guess a letter. ');//הכותרת בקונסולה
+   console.log('\n');
+   if (guessArray.includes(guess))//במידה והשחקן כבר בחר את האות המערכת תשלח הודעה שמודיעה שנבחרה
+   {
+       console.log('Already chosen. ');
+   }
+   console.log('\n');
+   guessArray.push(guess);//שיטה על מנת לדחוף את הבחירה של אות לניחוש
+   if (guess===null)//תנאי אשר קבוע לעשות זאת כל פעם בנפרד
+   {
+       break;
+   }
+   else if(guess.length!==1)//במידה והשחקן הכניס יותר מאות אחת אז המערכת תודיע לשחקן לבחור רק אות אחת
+   {
+       console.log('Please enter a single letter. ');
+       console.log('\n');
+   }
+ 
+   else if(!word.includes(guess))//במידה והשחקן בחר אות כמה אותיות לא נכונות אז המערכת מודיעה לו שנשאר לו רק ניסיון אחד
+   {
+       lives--;
+       console.log('One life lost. ');
+       console.log('\n');
+   }
+ 
+   else if (lives===0)//במידה וכל הניסיונות שלו בוזבזו ולא הצליח אז המערכת מודיעה שהפסיד
+   {
+       console.log('Oof');
+   }
+ 
+   else
+   {
+       for (var j=0; j<word.length; j++)//במידה ועדיין נשארו לו חיים  אז להמשיך לפי כמות האותיות שנשארו
+       {
+           if (word[j]=== guess)
+           {
+               answerArray[j] = guess;
+               remainingLetters--;
+           }
+       }
+   }
+ 
+   if (lives===0)//תנאי שאומר אם במידה ויש לשחקן 0 ניסיונות אז להפסיק לפעול על פי האותיות נשארו(סיום המשחק)
+   {
+       break;
+   }
+}
+console.log('\n');
+console.log(answerArray.join(" "));//צירוך מערך התשובה על מנת להודיע לאחר מכן על מה היא
+console.log('The answer was ' + word + '!');//הודעה על מה הייתה התשובה
+console.log('Thank you for playing ! ');// דרישת שלום שתודה לשחקן על השתתפות
